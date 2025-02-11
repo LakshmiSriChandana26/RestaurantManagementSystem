@@ -1,0 +1,22 @@
+<!-- order_item_success.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Item Success</title>
+</head>
+<body>
+    <h1>Order Placed Successfully</h1>
+    <p>Details for the ordered item:</p>
+    <img src="{{ cart.menu_item.image.url }}" alt="{{ cart.menu_item.name }}" style="width: 50px;">
+    <p>Menu Item: {{ cart.menu_item.name }}</p>
+    <p>Quantity: {{ cart.quantity }}</p>
+    <p>Status: {{ cart.status }}</p>
+    <p>Date and Time: {{ cart.datetime }}</p>
+</body>
+    <form method="post" action="{% url 'home' %}">
+        {% csrf_token %}
+        <input type="submit" value="Buy">
+    </form>
+
+</html>

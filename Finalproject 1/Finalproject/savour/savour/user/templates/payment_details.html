@@ -1,0 +1,69 @@
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Form</title>
+  <style>
+    /* Add your CSS styles here */
+    #upi_fields,
+    #net_banking_fields,
+    #debit_card_fields {
+      display: none;
+    }
+  </style>
+</head>
+<body style="background-image:url({% static 'images/d.jpg' %}); background-repeat: no-repeat;background-size: 100%;text-align:center">
+{{ cart }}
+<form method="post" action="{% url 'paymentdetail' cart.id %}">
+    {% csrf_token %}
+    <p style="font-size:30px">Payment method</p>
+    <div>
+      <input type="radio" id="cash" name="payment_method" value="cash">
+      <label for="upi">cash</label>
+    </div>
+    <div>
+      <input type="radio" id="upi" name="payment_method" value="upi">
+      <label for="upi">UPI</label>
+    </div>
+    <div>
+      <input type="radio" id="net_banking" name="payment_method" value="net_banking">
+      <label for="net_banking">Net Banking</label>
+    </div>
+    <div>
+      <input type="radio" id="debit_card" name="payment_method" value="debit_card">
+      <label for="debit_card">Debit Card</label>
+    </div>
+
+    <div id="upi_fields">
+      <p>UPI ID:</p>
+      <input type="text" id="upi_id" name="upi_id" required>
+    </div>
+
+    <div id="net_banking_fields">
+      <p>Net Banking Bank:</p>
+      <select id="net_banking_bank" name="net_banking_bank">
+        <option value="">Select Bank</option>
+        <option value="ICICI Bank">ICICI Bank</option>
+        <option value="HDFC Bank">HDFC Bank</option>
+        <option value="SBI Bank">SBI Bank</option>
+      </select>
+
+      <p>Net Banking Account Number:</p>
+      <input type="text" id="net_banking_account_number" name="net_banking_account_number" required>
+    </div>
+
+    <div id="debit_card_fields">
+      <p>Debit Card Number:</p>
+      <input type="text" id="debit_card_number" name="debit_card_number" required>
+
+      <p>CVV:</p>
+      <input type="text" id="cvv" name="cvv" required>
+    </div>
+
+    <button type="submit">Make Payment</button>
+     
+  </form>
+</body>
+</html>

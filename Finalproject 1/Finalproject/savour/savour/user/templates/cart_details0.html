@@ -1,0 +1,114 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url({% static 'images/fo.jpg' %});
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #fff;
+            background-color: #ff6347;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #ff6347;
+            color: #fff;
+        }
+
+        img {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 5px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #cc4a35;
+        }
+
+        p {
+            color: #fff;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cart Detail</h1>
+
+    {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Menu Item</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Date and Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart in cart_items %}
+                    <tr>
+                        <td><img src="{{ cart.menu_item.image.url }}" alt="{{ cart.menu_item.name }}"></td>
+                        <td>{{ cart.menu_item.name }}</td>
+                        <td>{{ cart.quantity }}</td>
+                        <td>{{ cart.status }}</td>
+                        <td>{{ cart.datetime }}</td>
+                        <td>
+                            <form method="post" action="{% url 'order_item' cart.id %}">
+                                {% csrf_token %}
+                                <input type="submit" value="Order">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No items in the cart.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'home' %}">
+        {% csrf_token %}
+        <input type="submit" value="Back To Home">
+    </form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- upload_menu.html -->
+<form method="post" enctype="multipart/form-data" action="{% url 'uploaditem' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Upload Menu</button>
+</form>
+
+
+  {% for item in menu_items %}
+    <div class="col-md-3">.
+      <a href="{{ item.image }}" target="blank"><img src="{{ item.image.url }}" alt="{{ item.name }}"></a>
+
+      <h3>{{ item.name }}</h3>
+      <h5>Prize: {{ item.price }} <del>{{ item.discounted_price }}</del></h5>
+      <a href="" style="color: white; background-color: green">ADD CART</a>
+    </div>
+  {% endfor %}

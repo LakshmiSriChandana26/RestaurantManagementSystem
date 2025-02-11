@@ -1,0 +1,35 @@
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Form</title>
+</head>
+<body style="background-image:url({% static 'images/d.jpg' %}); background-repeat: no-repeat;background-size: 100%;text-align:center">
+<form method="post" action="{% url 'paymentdetail' cart.id }">
+    {% csrf_token %}
+    <p style="font-size:30px">Payment method</p>
+
+
+    <div>
+      <input type="radio" id="debit_card" name="payment_method" value="debit_card">
+      <label for="debit_card">Debit Card</label>
+    </div>
+
+
+
+    <div id="debit_card_fields">
+      <p>Debit Card Number:</p>
+      <input type="text" id="debit_card_number" name="debit_card_number" required>
+
+      <p>CVV:</p>
+      <input type="text" id="cvv" name="cvv" required>
+    </div>
+
+
+<button type="submit">Make Payment</button>
+  </form>
+
+</body>
+</html>

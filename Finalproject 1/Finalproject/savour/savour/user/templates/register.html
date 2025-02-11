@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+    <style>
+        /* Additional styles for the registration page */
+        body {
+            background-color: #fdf5e6;
+        }
+
+        header {
+            background-color: #ff6347;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Styles for the registration form */
+        .login-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 300px; /* Set maximum width for the login box */
+            margin: 0 auto; /* Center the login box horizontally */
+        }
+
+        .login-box form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-box input[type="text"],
+        .login-box input[type="email"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-box button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-box button[type="submit"]:hover {
+            background-color: #cc4a35;
+        }
+
+        .login-box p {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to <img src="{% static 'images/s.png' %}" alt="Logo" width="70px" height="70px"> Savour-Heaven</h1>
+    </header>
+    <main>
+        <section>
+            <div class="login-box"> <!-- Styling for the registration form -->
+                <h2>Register</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn" type="submit">Register</button>
+                </form>
+                <p>Already have an account? <a href="{% url 'index' %}" class="btn">Login</a></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Savour-Heaven by chandanalakshmipuram. All rights reserved.</p>
+    </footer>
+</body>
+</html>

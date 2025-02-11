@@ -1,0 +1,158 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Details</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdf5e6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #ff6347;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .cart-box {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .checkout-box {
+            flex: 1;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .cart-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            max-width: 400px;
+        }
+
+        .cart-item img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background-color: #cc4a35;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #cc4a35;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cart Details</h1>
+    </header>
+    <div class="container">
+        <div class="cart-box">
+            <main>
+                {% for cart_item in cart_items %}
+                <div class="cart-item">
+                    <div>
+                        <h2>{{ cart_item.menu_item.name }}</h2>
+                        <img src="{{ cart_item.menu_item.image.url }}" alt="{{ cart_item.menu_item.name }}">
+                        <p>Quantity:
+                            <span id="quantity_{{ cart_item.id }}">{{ cart_item.quantity }}</span>
+                            <button type="button" class="quantity-btn" onclick="decrementQuantity('{{ cart_item.id }}')">-</button>
+                            <button type="button" class="quantity-btn" onclick="incrementQuantity('{{ cart_item.id }}')">+</button>
+                        </p>
+                    </div>
+                    <p>Status: {{ cart_item.status }}</p>
+                    <p>Date & Time: {{ cart_item.datetime }}</p>
+                </div>
+                {% empty %}
+                <p>Your cart is empty.</p>
+                {% endfor %}
+            </main>
+        </div>
+        <div class="checkout-box">
+            <div class="checkout-content">
+                <h2>Checkout</h2>
+                <p>Total Items: {{ total_items }}</p>
+                <p>Total Price: ${{ total_price }}</p>
+                <form action="{% url 'home' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Proceed to Checkout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function incrementQuantity(itemId) {
+            var quantityElement = document.getElementById("quantity_" + itemId);
+            var quantity = parseInt(quantityElement.innerText);
+            quantity++;
+            quantityElement.innerText = quantity;
+        }
+
+        function decrementQuantity(itemId) {
+            var quantityElement = document.getElementById("quantity_" + itemId);
+            var quantity = parseInt(quantityElement.innerText);
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.innerText = quantity;
+            }
+        }
+    </script>
+<footer style="color:white;background-color:black;text-align:center,width: 70px">
+		 <p>&copy; 2024 Savour-Heaven(Restaurant management system) by chandanalakshmipuram. All rights reserved.</p>
+	</footer>
+</body>
+</html>

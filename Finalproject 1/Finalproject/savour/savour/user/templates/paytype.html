@@ -1,0 +1,168 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url({% static 'images/v.jpg' %});
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            padding-top: 50px; /* Add some top padding for better layout */
+        }
+
+        header {
+            background-color: #ff6347;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #cc4a35;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back-btn {
+            background-color: #3b444b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+         <h1><img src="{% static 'images/s.png' %}" alt="Logo" width="70px" height="70px">Savour-Heaven</h1>
+<!--        <h1>Payment Type</h1>-->
+    </header>
+
+    <div class="container">
+        <form method="post" action="{% url 'paymentdetail' %}" enctype="multipart/form-data" id="registrationForm">
+            {% csrf_token %}
+            <label for="payment_type">Payment Type:</label>
+            <select name="payment_type" id="payment_type" onchange="showFields()">
+                <option value="S">Please Select</option>
+                <option value="U">UPI</option>
+                <option value="D">DEBIT CARD</option>
+                <option value="N">NET BANKING</option>
+            </select>
+
+            <div id="upi_fields" class="hidden">
+                <label for="upi_id">UPI ID:</label>
+                <input type="text" name="upi_id">
+                <label for="upi_phone_number">UPI Phone Number:</label>
+                <input type="text" name="upi_phone_number">
+                <label for="upi_otp">UPI OTP:</label>
+                <input type="text" name="upi_otp">
+            </div>
+
+            <div id="debit_card_fields" class="hidden">
+                <label for="debit_card_number">Debit Card Number:</label>
+                <input type="text" name="debit_card_number">
+                <label for="cvv">CVV:</label>
+                <input type="text" name="cvv">
+                <label for="debit_card_otp">Debit Card OTP:</label>
+                <input type="text" name="debit_card_otp">
+            </div>
+
+            <div id="net_banking_fields" class="hidden">
+                <label for="bank_account_number">Bank Account Number:</label>
+                <input type="text" name="bank_account_number">
+                <label for="ifsc_code">IFSC Code:</label>
+                <input type="text" name="ifsc_code">
+                <label for="account_holder_name">Account Holder Name:</label>
+                <input type="text" name="account_holder_name">
+                <label for="net_banking_otp">Net Banking OTP:</label>
+                <input type="text" name="net_banking_otp">
+            </div>
+
+            <button type="submit">Make Payment</button>
+        </form>
+
+        <a class="back-btn" href="{% url 'home' %}">Back to Home</a>
+    </div>
+
+    <script>
+        function showFields() {
+            var selectedUserType = document.getElementById("payment_type").value;
+            var upiFields = document.getElementById("upi_fields");
+            var debitCardFields = document.getElementById("debit_card_fields");
+            var netBankingFields = document.getElementById("net_banking_fields");
+
+            // Hide all fields initially
+            upiFields.classList.add("hidden");
+            debitCardFields.classList.add("hidden");
+            netBankingFields.classList.add("hidden");
+
+            // Show the appropriate field group based on the selected user type
+            if (selectedUserType === "U") {
+                upiFields.classList.remove("hidden");
+            } else if (selectedUserType === "D") {
+                debitCardFields.classList.remove("hidden");
+            } else if (selectedUserType === "N") {
+                netBankingFields.classList.remove("hidden");
+            }
+        }
+    </script>
+</body>
+</html>

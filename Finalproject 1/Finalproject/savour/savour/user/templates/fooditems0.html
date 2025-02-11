@@ -1,0 +1,99 @@
+{% load static %}
+
+<html>
+<head>
+	<title>Restaurant management system</title>
+	<link rel="stylesheet" type="text/css" href="image.jpg">
+	  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style type="text/css">
+	a{
+		color: red;
+		font-size: 20px;
+		margin-left: 10px;
+	}
+	.img img{
+		width: 60%;
+		height: 200px;
+		margin-left: 20px;
+		border-radius: 40%;
+		border: 2px dotted black;
+	}
+</style>
+<body style="background-color:#e2e3e2;text-align:center">
+
+	<h1 style="text-align: center;color: white;text-shadow: 2px 2px red;background-color: black;"><img src="{% static 'images/image.jpg' %}" width="120px" height="80px">Restaurant management system</h1>
+	<nav style="background-color:black;margin-top:-20px">
+        <a href="{% url 'fooditems' %}">Home</a>
+		<a href="{% url 'contact' %}">contact information</a>|
+		<a href="{% url 'fetch_reservations' %}">Table reservation</a>|
+
+		<a href="{% url 'upload_reservation' %}">Upload Table info</a>|
+
+		<a href="{% url 'reviews' %}">reviews</a>|
+
+		<a href="{% url 'gallery' %}">Gallery</a>|
+
+		<a href="{% url 'cart_detail' %}">Go To Cart</a>
+
+
+	</nav>
+	<marquee style="background-color:black;color:white;"direction="right">*Savour the Flavor:Where Every Bite Tells a Story *</marquee>
+	<h2 style=" text-align: center">Welcome {{uname}}</h2>
+<div class="col-md-5">
+<br>
+
+	<form method="post" action="{% url 'search' %}">
+    {% csrf_token %}
+<input type="text" name="query" placeholder="search your food" style="margin-left: 450px;width: 100%;padding: 10px;border-radius: 40px;">
+	</form>
+</div><br>
+
+<!-- menu_template.html -->
+	 <div class="img">
+<div class="row">
+  {% for item in menu_items %}
+    <div class="col-md-3">
+      <a href="{{ item.image }}" target="blank"><img src="{{ item.image.url }}" alt="{{ item.name }}"></a>
+
+      <h3>{{ item.name }}</h3>
+      <h5>Prize: {{ item.price }} <del>{{ item.discounted_price }}</del></h5>
+
+		<form method="post" action="{% url 'add_to_cart' item.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="quantity" value="1">
+
+    <div class="quantity-control">
+      <button type="button" class="quantity-btn" onclick="decrementQuantity('{{ item.id }}')">-</button>
+      <input type="text" name="quantity" value="1" id="quantity_{{ item.id }}" readonly>
+      <button type="button" class="quantity-btn" onclick="incrementQuantity('{{ item.id }}')">+</button>
+    </div>
+
+    <button type="submit">Add to Cart</button>
+</form>
+
+    </div>
+  {% endfor %}
+</div>
+	<script>
+  function incrementQuantity(itemId) {
+    var quantityInput = document.getElementById('quantity_' + itemId);
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+  }
+
+  function decrementQuantity(itemId) {
+    var quantityInput = document.getElementById('quantity_' + itemId);
+    var currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+      quantityInput.value = currentValue - 1;
+    }
+  }
+</script>
+
+
+<footer style="color:white;background-color:black;text-align:center">
+		<label>Developed By@ LakshmiSriChandana</label>		
+	</footer>
+</body>
+</html>

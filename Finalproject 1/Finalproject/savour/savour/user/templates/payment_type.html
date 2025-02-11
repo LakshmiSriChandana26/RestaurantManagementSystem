@@ -1,0 +1,23 @@
+<!-- payment.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Details </title>
+</head>
+<body>
+<a href="path/to/payment_type.html">payment details</a>
+<h1>Select payment details</h1>
+<form action="payment/" method="POST">
+    <input type="radio" id="cash" name="payment_method" value="cash">
+    <label for="cash">Cash</label><br>
+    <input type="radio" id="net_banking" name="payment_method" value="net_banking">
+    <label for="net_banking">NetBanking</label><br>
+    <input type="radio" id="credit_card" name="payment_method" value="credit_card">
+    <label for="credit_card">CreditCard</label><br>
+    <button type="submit">Proceed to payment</button>
+</form>
+</body>
+</html>

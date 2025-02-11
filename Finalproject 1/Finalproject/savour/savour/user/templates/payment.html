@@ -1,0 +1,52 @@
+<!-- payment.html -->
+{% load static %}
+
+<html>
+<head>
+    <title>Payment Page</title>
+</head>
+<body style="background-image:url({% static 'images/blu.jpg' %}); background-repeat: no-repeat;background-size: 100%;text-align:center">
+    <h1>Payment Page</h1>
+    <p>Total Amount: {{ total_amount }}</p>
+    <!-- Add dummy payment form fields here -->
+    {% if cart %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Menu Item</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Date and Time</th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td><img src="{{ cart.menu_item.image.url }}" alt="{{ cart.menu_item.name }}" style="width: 50px;"></td>
+                        <td>{{ cart.menu_item.name }}</td>
+                        <td>{{ cart.quantity }}</td>
+                        <td>{{ cart.status }}</td>
+                        <td>{{ cart.datetime }}</td>
+                        <td>
+                            <form method="post" action="{% url 'paymentdetail' cart.id %}">
+        {% csrf_token %}
+
+
+
+
+        <input type="submit" value="Make Payment">
+    </form>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>No items in the cart.</p>
+    {% endif %}
+
+
+<a href="{% url 'cart_detail' %}">Cancel</a>
+</body>
+</html>

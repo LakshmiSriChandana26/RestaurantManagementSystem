@@ -1,0 +1,16 @@
+<!-- cart.html -->
+{% load static %}
+
+<html lang="en">
+<head>
+    <title> cart</title>
+<body style="background-image:url({% static 'images/s.jpg' %}); background-repeat: no-repeat;background-size: 100%;text-align:center">
+<h1>Your Cart</h1>
+{% for cart_item in cart_items %}
+    <div >
+        <p>Menu Item ID: {{ cart_item.menu_item_id }} - Quantity: {{ cart_item.quantity }}</p>
+        <!-- Display other details based on menu_item_id -->
+    </div>
+{% endfor %}
+</body>
+</html>
